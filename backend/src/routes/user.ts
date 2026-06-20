@@ -3,8 +3,7 @@ import { sign } from "hono/jwt";
 import z  from "zod";
 import { getPrisma } from "../utils/prismaHelper";
 import { signUpSchema,signInSchema } from "../../../common/src";
-
-
+import { Prisma } from "../generated/prisma/client";
 const userRouter = new Hono<{Bindings:{
     DATABASE_URL:string,
     JWT_KEY:string
@@ -19,7 +18,7 @@ userRouter.post('/signup', async (c) => {
             mssg:"Invalid Input!"
         },403)
     }
-
+    try{
     const user = await prisma.user.create({
         data:{
             email:body.email,
@@ -36,6 +35,19 @@ userRouter.post('/signup', async (c) => {
     return c.json({
         jwt:token
     })
+}catch(error){
+    if(
+        error instanceof Prisma.PrismaClientKnownRequestError && error.code==='P2002'
+    ){
+        return c.json({
+            message:"User Already Exist"
+        },409)
+    }
+
+    return c.json({
+        message:"Internal Server Error"
+    },500)
+}
 })
 
 userRouter.post('/signin', async (c) => {

@@ -1,0 +1,23 @@
+@import "tailwindcss";
+@font-face {
+  font-family: "Cormorant Garamond";
+  src: url("/fonts/CormorantGaramond-VariableFont_wght.woff2")
+    format("woff2");
+  font-weight: 300 700;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Noto";
+  src: url("/fonts/NotoSansMono.woff2")
+    format("woff2");
+  font-weight: 300 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+@theme {
+  --font-cormorant: "Cormorant Garamond", serif;
+  --font-noto: "Noto", serif;
+}
+

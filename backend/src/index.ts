@@ -2,7 +2,7 @@ import { Hono } from 'hono'
 import { verify  } from 'hono/jwt'
 import { PrismaClient } from "./generated/prisma/client";
 import { withAccelerate } from "@prisma/extension-accelerate";
-
+import { cors } from 'hono/cors';
 import userRouter from './routes/user'
 import blogRouter from './routes/blog'
 
@@ -21,6 +21,7 @@ const app = new Hono<{
     }
 }>()
 
+app.use('/*',cors())
 app.use('/api/v1/blog/*',async (c,next)=>{
     const authorizationID = c.req.header('Authorization');
     if(!authorizationID){
