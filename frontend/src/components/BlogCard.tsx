@@ -24,7 +24,10 @@ export const BlogCard = ({authorName,title,content,publishedDate}:BlogCardProps)
   )
 }
 
-function getAvatarInitials(name: string): string {
+export function getAvatarInitials(name: string): string {
+  if(!name){
+    return "?"
+  }
   const words = name.trim().split(/\s+/);
 
   if (words.length === 1) {
@@ -37,7 +40,7 @@ function getAvatarInitials(name: string): string {
   ).toUpperCase();
 }
 
-function Avatar({name}:{name:string}){
+export function Avatar({name}:{name:string}){
     return <div className="relative inline-flex items-center justify-center w-8 h-8 overflow-hidden bg-black rounded-full">
             <span className="font-medium text-xs text-white">{getAvatarInitials(name)}</span>
         </div>
